@@ -1,0 +1,10 @@
+-- 1587. Bank Account Summary II
+
+SELECT
+    u.name,
+    SUM(t.amount) AS balance
+FROM Users u
+JOIN Transactions t
+USING (account)
+GROUP BY t.account
+HAVING SUM(t.amount) > 10000
