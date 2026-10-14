@@ -27,3 +27,16 @@ FROM purchase p
 INNER JOIN active a ON p.customer_id = a.customer_id
 INNER JOIN refund r ON a.customer_id = r.customer_id
 ORDER BY p.customer_id ASC
+
+-- ==============
+
+
+SELECT customer_id 
+FROM customer_transactions 
+GROUP by customer_id
+HAVING sum( transaction_type ='purchase') >2 -- min 3 days
+AND
+DATEDIFF(max(transaction_date),min(transaction_date))>29
+AND
+SUM(transaction_type ='refund')/COUNT(*)<0.2
+ORDER BY 1
